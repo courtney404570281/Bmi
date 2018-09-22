@@ -1,6 +1,6 @@
 package teresa.com.bmi;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Help")
-                        .setMessage("The body mass index (BMI) or Quetelet index is a value derived from the mass (weight) and height of an individual.")
-                        .setPositiveButton("OK", null)
+                        .setTitle(R.string.help)
+                        .setMessage(R.string.bmi_info)
+                        .setPositiveButton(R.string.ok, null)
                         .show();
             }
         });
@@ -50,19 +50,22 @@ public class MainActivity extends AppCompatActivity {
         float weight = Float.parseFloat(w);
         float height = Float.parseFloat(h);
         float bmi = weight / (height * height);
-        Log.d("MainActivity", "BMI: " + bmi);
-        Toast.makeText(this , "Your BMI is : " + bmi, Toast.LENGTH_LONG).show();
-        result.setText("Your BMI is :" + bmi);
-        new AlertDialog.Builder(this)
-                .setTitle("BMI")
-                .setMessage("Your BMI is :" + bmi)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        Log.d("MainActivity", getString(R.string.your_bmi_is) + bmi);
+        Toast.makeText(this , getString(R.string.your_bmi_is) + bmi, Toast.LENGTH_LONG).show();
+        result.setText(getString(R.string.your_bmi_is) + bmi);
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("BMI", bmi);
+        startActivity(intent);
+        /*new AlertDialog.Builder(this)
+                .setTitle(R.string.bmi)
+                .setMessage(getString(R.string.your_bmi_is)+ bmi)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         edHeight.setText("");
                         edWeight.setText("");
                     }
                 })
-                .show();
+                .show();*/
     }
 }
